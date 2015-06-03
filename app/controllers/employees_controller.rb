@@ -42,6 +42,10 @@ class EmployeesController < ApplicationController
     csv = import_params[:csv]
     SmarterCSV.process(csv.tempfile).map do |employee_attr|
       employee = Employee.create(employee_attr)
+      unless employee.errors.empty?
+        flash[:alert] ||= ''
+        flash[:alert] += employee.errors.full_messages.join(".\n") + ".\n"
+      end
     end
     redirect_to :back
   end
