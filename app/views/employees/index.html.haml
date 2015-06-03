@@ -20,4 +20,8 @@
 
 %br
 
+= simple_form_for :employee, url: import_employees_url do |f|
+  = f.input :csv, as: :file, label: 'Upload CSV'
+  = f.button :submit, 'Upload'
+
 = link_to 'New Employee', new_employee_path

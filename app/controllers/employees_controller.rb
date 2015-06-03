@@ -37,6 +37,15 @@ class EmployeesController < ApplicationController
     end
   end
 
+  # POST /employees/import
+  def import
+    csv = import_params[:csv]
+    SmarterCSV.process(csv.tempfile).map do |employee_attr|
+      employee = Employee.create(employee_attr)
+    end
+    redirect_to :back
+  end
+
   # PATCH/PUT /employees/1
   # PATCH/PUT /employees/1.json
   def update
